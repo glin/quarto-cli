@@ -381,7 +381,9 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
   document.addEventListener("keyup", (event) => {
     const { key } = event;
     const kbds = quartoSearchOptions["keyboard-shortcut"];
-    const focusedEl = document.activeElement;
+    const focusedEl =
+      document.activeElement?.shadowRoot.activeElement ||
+      document.activeElement;
 
     const isFormElFocused = [
       "input",
@@ -397,7 +399,7 @@ window.document.addEventListener("DOMContentLoaded", function (_event) {
       kbds &&
       kbds.includes(key) &&
       !isFormElFocused &&
-      !document.activeElement.isContentEditable
+      !focusedEl.isContentEditable
     ) {
       event.preventDefault();
       window.quartoOpenSearch();
